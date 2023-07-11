@@ -65,6 +65,8 @@ runs:
     - name: Docker meta
       id: meta
       uses: docker/metadata-action@v4
+      env:
+        DOCKER_METADATA_PR_HEAD_SHA: true
       with:
         # list of Docker images to use as base name for tags
         images: |
