@@ -66,6 +66,9 @@ runs:
       id: meta
       uses: docker/metadata-action@v4
       env:
+        # Annoyingly, docker computes the SHA independently of any checkout action locally.
+        # So we have to tell this action to separately use the PR HEAD instead of the
+        # merge commit.
         DOCKER_METADATA_PR_HEAD_SHA: true
       with:
         # list of Docker images to use as base name for tags
