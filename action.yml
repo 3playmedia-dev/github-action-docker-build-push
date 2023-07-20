@@ -78,7 +78,7 @@ outputs:
     value: ${{ inputs.registry }}/${{ steps.image_name.outputs.image_name }}
   tag:
     description: "Docker image tag"
-    value: ${{ steps.tag.outputs.output }}
+    value: ${{ steps.tag.outputs.sha }}
   metadata:
     description: "Docker image metadata"
     value: ${{ steps.get-metadata.outputs.metadata }}
@@ -126,7 +126,7 @@ runs:
           org.opencontainers.image.source=https://github.com/${{ inputs.organization }}/${{ inputs.repository }}
 
     - name: Pull out SHA tag
-      id: sha
+      id: tag
       shell: bash
       run: |
         sha=$(echo '${{ steps.meta.outputs.json }}' | jq -r '.tags | map(select(test("sha-\\w{8,}"))) | first | match("sha-\\w{8,}") | .string')
