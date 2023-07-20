@@ -125,19 +125,13 @@ runs:
         labels: |
           org.opencontainers.image.source=https://github.com/${{ inputs.organization }}/${{ inputs.repository }}
 
-    - name: 'Install jq 1.6'
-      uses: dcarbone/install-jq-action@v1.0.1
-      with:
-        version: 1.6
-        force: 'true'
-
-    - uses: edwardgeorge/jq-action@main
-      id: tag
-      with:
-        compact: true
-        raw-output: true
-        input: ${{ steps.meta.outputs.json }}
-        script: '.tags | map(select(test("sha-\\w{8,}"))) | first | match("sha-\\w{8,}") | .string'
+    - name: Pull out SHA tag
+      id: sha
+      shell: bash
+      run: |
+        sha=$(echo '${{ steps.meta.outputs.json }}' | jq -r '.tags | map(select(test("sha-\\w{8,}"))) | first | match("sha-\\w{8,}") | .string')
+        echo "sha=$sha" >> $GITHUB_OUTPUT
+        echo "Docker image SHA: $sha"
 
     # docker context must be created prior to setting up Docker Buildx
     # https://github.com/actions-runner-controller/actions-runner-controller/issues/893
