@@ -1,53 +1,53 @@
-name: 'Docker build and push'
-description: 'Simple Docker build and push action'
+name: "Docker build and push"
+description: "Simple Docker build and push action"
 author: hello@cloudposse.com
 branding:
-  icon: 'box'
-  color: 'white'
+  icon: "box"
+  color: "white"
 inputs:
   workdir:
-    description: 'Working directory'
+    description: "Working directory"
     required: false
-    default: './'
+    default: "./"
   file:
-    description: 'Dockerfile name'
+    description: "Dockerfile name"
     required: false
-    default: 'Dockerfile'
+    default: "Dockerfile"
   build-args:
     description: "List of build-time variables"
     required: false
   organization:
-    description: 'Organization'
+    description: "Organization"
     required: true
   repository:
-    description: 'Repository'
+    description: "Repository"
     required: true
   registry:
-    description: 'Docker registry'
+    description: "Docker registry"
     required: true
   target:
     description: "Sets the target stage to build"
     required: false
-    default: ''
+    default: ""
   platforms:
     description: "List of target platforms for build (e.g. linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,etc)"
     required: false
-    default: 'linux/amd64'
+    default: "linux/amd64"
   provenance:
     description: "Generate provenance attestation for the build"
     required: false
   image_name:
     description: "Image name (excluding registry). Defaults to {{$organization/$repository}}."
     required: false
-    default: ''
+    default: ""
   login:
-    description: 'Docker login'
+    description: "Docker login"
     required: false
-    default: ''
+    default: ""
   password:
-    description: 'Docker password'
+    description: "Docker password"
     required: false
-    default: ''
+    default: ""
   cache-from:
     description: "List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)"
     required: false
@@ -158,7 +158,7 @@ runs:
         password: ${{ inputs.password }}
 
     - name: Build and push Docker images
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       id: docker-build-push-action
       with:
         context: ${{ inputs.workdir }}
