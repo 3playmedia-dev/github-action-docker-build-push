@@ -144,6 +144,8 @@ runs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
+    # Pin buildx to 0.15.1 to avoid 'bad file descriptor' errors on cache write
+    # See https://github.com/docker/buildx/issues/2593
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
       with:
